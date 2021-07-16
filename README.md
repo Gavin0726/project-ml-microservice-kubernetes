@@ -1,42 +1,73 @@
 <include a CircleCI status badge, here>
+[![Gavin0726](https://circleci.com/gh/Gavin0726/project-ml-microservice-kubernetes.svg?style=svg)](https://circleci.com/gh/Gavin0726/project-ml-microservice-kubernetes)
 
 ## Project Overview
 
-In this project, you will apply the skills you have acquired in this course to operationalize a Machine Learning Microservice API. 
+In this project, a machine learning based prediction model is deployed. `sklearn` model that has been trained to predict housing prices in Boston according to several features, such as average rooms in a home and data about highway access, teacher-to-pupil ratios, and so on. The model is trained with the data set published in Kaggle site.
 
-You are given a pre-trained, `sklearn` model that has been trained to predict housing prices in Boston according to several features, such as average rooms in a home and data about highway access, teacher-to-pupil ratios, and so on. You can read more about the data, which was initially taken from Kaggle, on [the data source site](https://www.kaggle.com/c/boston-housing). This project tests your ability to operationalize a Python flask app—in a provided file, `app.py`—that serves out predictions (inference) about housing prices through API calls. This project could be extended to any pre-trained machine learning model, such as those for image recognition and data labeling.
+This model could be extended to any pre-trained machine learning model, such as those for image recognition and data labeling.
 
-### Project Tasks
+This project can be running in local, Docker and Kubernates environment. 
 
-Your project goal is to operationalize this working, machine learning microservice using [kubernetes](https://kubernetes.io/), which is an open-source system for automating the management of containerized applications. In this project you will:
-* Test your project code using linting
-* Complete a Dockerfile to containerize this application
-* Deploy your containerized application using Docker and make a prediction
-* Improve the log statements in the source code for this application
-* Configure Kubernetes and create a Kubernetes cluster
-* Deploy a container using Kubernetes and make a prediction
-* Upload a complete Github repo with CircleCI to indicate that your code has been tested
+### Running `app.py` Standalone
 
-You can find a detailed [project rubric, here](https://review.udacity.com/#!/rubrics/2576/view).
 
-**The final implementation of the project will showcase your abilities to operationalize production microservices.**
+1. `python3 -m venv ~/.env1`
+2. `source ~/.env1/bin/activate`
+3. `make install`
+2. `make lint`
+3. `python app.py`
 
----
 
-## Setup the Environment
+### Running `app.py` in Docker
 
-* Create a virtualenv and activate it
-* Run `make install` to install the necessary dependencies
+1. Register Docker account and installation
+2.  `./run_docker.sh`
 
-### Running `app.py`
 
-1. Standalone:  `python app.py`
-2. Run in Docker:  `./run_docker.sh`
-3. Run in Kubernetes:  `./run_kubernetes.sh`
+### Running `app.py` in Kubernetes
 
-### Kubernetes Steps
+1. Install minikube and start
+2. `./run_docker.sh`
+3. `./upload_docker.sh`
+4. `./run_kubernetes.sh`
+5. `./make_prediction.sh`
 
-* Setup and Configure Docker locally
-* Setup and Configure Kubernetes locally
-* Create Flask app in Container
-* Run via kubectl
+
+### Make prediction
+
+Prepare the payload of a POST request with a json object that contains the concrete values (the input) of the features of the prediction model. 
+
+Performs an sklearn prediction
+        
+        input looks like:
+        {
+        "CHAS":{
+        "0":0
+        },
+        "RM":{
+        "0":6.575
+        },
+        "TAX":{
+        "0":296.0
+        },
+        "PTRATIO":{
+        "0":15.3
+        },
+        "B":{
+        "0":396.9
+        },
+        "LSTAT":{
+        "0":4.98
+        }
+        
+        result looks like:
+        { "prediction": [ <val> ] }
+        
+ 
+
+### The files in the repository
+
+1. `.circleci`has one configuration file config.yml that includes the necessary instructions to setup a CICD pipeline to fully automate the process
+2. `docker_out.txt and kubernetes_out.txt`  give examples of the expected output of running the app in Docker and Kubernetes. 
+3. `app.py` that serves out predictions (inference) about housing prices through API calls. 
