@@ -5,3 +5,17 @@ Port: 8000
     20.35373177134412
   ]
 }
+
+
+Gavin:project-ml-microservice-kubernetes gavin$ sh run_kubernetes.sh
+pod/flaskskearlndemo1 created
+NAME                READY   STATUS              RESTARTS   AGE
+flaskskearlndemo1   0/1     ContainerCreating   0          1s
+error: unable to forward port because pod is not running. Current status=Pending
+
+Gavin:project-ml-microservice-kubernetes gavin$ sh run_kubernetes.sh
+Error from server (AlreadyExists): pods "flaskskearlndemo1" already exists
+NAME                READY   STATUS    RESTARTS   AGE
+flaskskearlndemo1   1/1     Running   0          4m44s
+Forwarding from 127.0.0.1:8000 -> 80
+Forwarding from [::1]:8000 -> 80
